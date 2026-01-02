@@ -24,7 +24,7 @@ def log_alerte(sku):
             index_libre = ALERT_LOG.index(None)
             ALERT_LOG[index_libre] = message
     else:
-        print(f"⚠️ LOG PLEIN : Alerte sur {sku} ignorée !")
+        print(f" LOG PLEIN : Alerte sur {sku} ignorée !")
 
 
 def print_alerte():
@@ -36,7 +36,7 @@ def print_alerte():
             ALERT_LOG[i] = None  # Libère la place
 
 
-# --- SERVICE : STOCK ENGINE (ENTRÉE / CONTRÔLE) ---
+# --- SERVICE : STOCK (ENTRÉE / CONTRÔLE) ---
 
 def ajouter_produit(sku):
     """Service d'entrée en stock (Traçabilité FIFO)."""
@@ -44,7 +44,7 @@ def ajouter_produit(sku):
     if sku not in STOCK:
         STOCK[sku] = []
     STOCK[sku].append({"id": sku, "date": now})
-    print(f"✅ Entrée Stock : {sku} à {now}")
+    print(f" Entrée Stock : {sku} à {now}")
 
 
 def verifier_seuil(sku):
@@ -65,13 +65,13 @@ def appliquer_strategie_rupture(sku):
 
         if substitut_id in STOCK and STOCK[substitut_id]:
             produit = STOCK[substitut_id].pop(0)
-            print(f"🔄 SUBSTITUTION : {sku} remplacé par {substitut_id}")
+            print(f" SUBSTITUTION : {sku} remplacé par {substitut_id}")
             return produit
     except ValueError:
         pass  # Cas où l'ID n'est pas standard (ex: "ID_TEST")
 
     # 2. Backorder (Par défaut)
-    print(f"❌ RUPTURE : {sku} manquant (Backorder enregistré)")
+    print(f" RUPTURE : {sku} manquant (Backorder enregistré)")
     log_alerte(sku)
     return None
 
@@ -106,7 +106,7 @@ def preparer_colis(commande_str):
 
         return colis_final
     except Exception as e:
-        print(f"⚠️ Erreur de saisie : {e}")
+        print(f" Erreur de saisie : {e}")
 
 
 # --- INTERFACE UTILISATEUR (MAIN) ---
